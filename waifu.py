@@ -1,5 +1,6 @@
 import urllib.request
 import requests
+import os
 from bs4 import BeautifulSoup
 import re
 
@@ -11,6 +12,7 @@ html = urllib.request.urlopen(agent)
 bs = BeautifulSoup(html, 'html.parser')
 
 image_title = bs.title.get_text()
+image_title = image_title[:-14]
 print(image_title)
 
 for meta in bs.find_all('meta', property=re.compile('og:[a-z]*$')):
@@ -22,6 +24,7 @@ for meta in bs.find_all('meta', property=re.compile('og:[a-z]*$')):
         print(meta.attrs['property'][3:], ':' ,meta.attrs['content'])
     
 
+os.system(f'sxiv {image_title}.jpeg')
 
 
 
